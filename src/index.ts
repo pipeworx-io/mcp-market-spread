@@ -1,11 +1,19 @@
 interface McpToolDefinition {
   name: string;
   description: string;
+  /** Human-facing one-liner (fleet #1967). Optional; consumers fall back to
+   *  description. Kept in step with shared/src/types.ts — scripts/lib/
+   *  check-inlined-types.mjs reports drift at publish time. */
+  summary?: string;
   inputSchema: {
     type: 'object';
     properties: Record<string, unknown>;
     required?: string[];
+    anyOf?: Array<{ required: string[] }>;
+    oneOf?: Array<{ required: string[] }>;
+    allOf?: Array<{ required: string[] }>;
   };
+  outputSchema?: Record<string, unknown>;
 }
 
 interface McpToolExport {
@@ -57,7 +65,7 @@ const tools: McpToolExport['tools'] = [
     name: 'compare_topic',
     description:
       "Cross-venue prediction-market LANDSCAPE scanner: for one topic, show how 5 venues (Polymarket, Kalshi, Manifold, PredictIt, Futuur) are pricing it side by side and flag divergence. Each venue is queried in parallel; a venue that errors or times out is reported as { reachable: false } and never fails the call. Returns each venue's top matches normalized to { venue, title, implied_probability (0-1 for the main/YES outcome, or null), url, n_outcomes }, plus a divergence summary across venues' top matches. " +
-      "HONESTY: this surfaces WHERE TO LOOK for mispricing — it is NOT an executable-arb tool. A high spread_pp usually reflects different bet shapes, resolution criteria, dates, or thin liquidity, not a real arbitrage. Divergence is only computed when ≥2 venues' top titles share strong token overlap (Jaccard); otherwise divergence is null with a low-match-quality note telling you to compare manually. Verify the questions resolve identically before trading. For executable poly↔kalshi arbitrage (needs order-book depth) use the `polymarket_arbitrage` pack.",
+      "HONESTY: this surfaces WHERE TO LOOK for mispricing — it is NOT an executable-arb tool. A high spread_pp usually reflects different bet shapes, resolution criteria, dates, thin liquidity, or each venue's own trading fees (Polymarket and Kalshi both charge a taker fee that varies by category/price — see the polymarket_edges/polymarket_arbitrage tools for the modeled schedule; this scanner does not net any of them out), not a real arbitrage. Divergence is only computed when ≥2 venues' top titles share strong token overlap (Jaccard); otherwise divergence is null with a low-match-quality note telling you to compare manually. Verify the questions resolve identically before trading. For executable poly↔kalshi arbitrage (needs order-book depth AND fees) use the `polymarket_arbitrage` pack.",
     inputSchema: {
       type: 'object',
       properties: {
