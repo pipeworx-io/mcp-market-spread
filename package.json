@@ -1,12 +1,20 @@
 {
   "name": "@pipeworx/mcp-market-spread",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "market-spread MCP — cross-venue prediction-market landscape scanner.",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./tools.json": "./tools.json",
+    "./package.json": "./package.json"
+  },
   "bin": {
     "mcp-market-spread": "bin/cli.js"
+  },
+  "files": ["bin/", "lib/", "tools.json", "server.json"],
+  "engines": {
+    "node": ">=18"
   },
   "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "market-spread"],
   "license": "MIT",
@@ -14,19 +22,12 @@
     "type": "git",
     "url": "git+https://github.com/pipeworx-io/mcp-market-spread.git"
   },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "tsx": "^4.19.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3",
-    "@cloudflare/workers-types": "^4.20260405.1"
-  },
+  "mcpName": "io.github.pipeworx-io/market-spread",
   "pipeworx": {
-    "sourceHash": "v1-8ef7725c37a8e422968e4dfb75f8642480d1c859840a9dce9ce265059295e4c0",
-    "sourceCommit": "adb69d997f82a62e8e22b594488c7d04a227db35"
+    "mode": "gateway",
+    "slug": "market-spread",
+    "gatewaySlug": "market-spread",
+    "sourceHash": "v1-6ae6529f83fa661b8aff02e0447dda250a48a116763686281090fabc1ff73762",
+    "sourceCommit": "5c89d6abb778d45da5d92002eb251978622bedf9"
   }
 }

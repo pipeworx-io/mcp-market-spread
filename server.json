@@ -3,7 +3,7 @@
   "name": "io.github.pipeworx-io/market-spread",
   "title": "Market Spread",
   "description": "market-spread MCP — cross-venue prediction-market landscape scanner.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "websiteUrl": "https://pipeworx.io/packs/market-spread",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-market-spread",
